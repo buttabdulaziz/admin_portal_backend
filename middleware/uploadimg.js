@@ -23,5 +23,5 @@ const extension = (req, file, cb) => {
 export const upload = multer({
     storage: storage,
     fileFilter: extension,
-    limits: { fileSize: 1024 * 1024 * 5 } // 5MB limit
+    limits: { fileSize: 1024 * 1024 * 5 }
 });

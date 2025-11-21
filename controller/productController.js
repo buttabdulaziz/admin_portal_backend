@@ -75,3 +75,15 @@ export const getProductById = (req, res) => {
     res.json(data[0]);
   });
 };
+
+export const uploadImage = (req, res) => {
+  const {productId} = req.body;
+  const imagePath = 'upload/products/'+req.file.filename;
+  const query = "UPDATE products SET image=? WHERE id=?";
+  db.query(query, [imagePath, productId], (err, result) => {
+    if (err) {
+      return res.status(500).json({ status: false, error: "Database Error" });
+    }
+    res.json({ message: "Image Uploaded Successfully", status: true, imagePath: imagePath });
+  });
+}
