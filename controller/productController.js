@@ -79,7 +79,7 @@ export const getProductById = (req, res) => {
 export const uploadImage = (req, res) => {
   const {productId} = req.body;
   const imagePath = 'upload/products/'+req.file.filename;
-  const query = "UPDATE products SET image=? WHERE id=?";
+  const query = "UPDATE products SET img=? WHERE id=?";
   db.query(query, [imagePath, productId], (err, result) => {
     if (err) {
       return res.status(500).json({ status: false, error: "Database Error" });
