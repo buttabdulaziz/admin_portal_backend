@@ -16,10 +16,10 @@ export const verifyToken = (req, res, next) => {
   try {
     const decoded = jwt.verify(
       token,
-      '23dfsg:"$^&#dfst#$%$%&J"gertwer23r4t5y67u8i9o0p-='
+      process.env.JWT_SECRET
     );
 
-    req.user = decoded; // ✅ Save user inside request
+    req.admin = decoded;
     next();
 
   } catch (err) {

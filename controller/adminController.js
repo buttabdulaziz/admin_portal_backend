@@ -12,7 +12,7 @@ export const postAdmin = (req, res) => {
           adminId : result[0].id,
           adminEmail : result[0].email
         } , 
-        '23dfsg:"$^&#dfst#$%$%&J"gertwer23r4t5y67u8i9o0p-=' ,
+        process.env.JWT_SECRET,
         {
           expiresIn : '1h'
         })

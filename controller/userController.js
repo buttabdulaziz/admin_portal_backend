@@ -1,4 +1,5 @@
 import db from "../config/database.js";    
+import jwt from "jsonwebtoken";
 
 export const UserRegister = (req, res) => {
   const { name, email, pass, dob, gender, address, ph_number } = req.body;
@@ -17,8 +18,19 @@ export const UserRegister = (req, res) => {
     (err, result) => {
       if (err) {
         return res.status(500).json({ status: false, error: "Database Error" });
+      }else{
+        const token = jwt.sign(
+        {
+          userId : result[0].id,
+          userEmail : result[0].email
+        } , 
+        process.env.JWT_SECRET,
+        {
+          expiresIn : '1h'
+        })
+        res.json({ message: "Registration Successful", status: true, token: token});
+
       }
-      res.json({ message: "Registration Successful", status: true });
     }
   );
     }
@@ -39,6 +51,18 @@ export const userLogin = (req, res) => {
     if (result.length === 0) {
       return res.status(401).json({ message: "Invalid Email or Password" });
     }
-    res.json({ message: "Login successful", status: true, user: result[0] });
+    else{
+      const token = jwt.sign(
+              {
+                userId : result[0].id,
+                userEmail : result[0].email
+              } , 
+              process.env.JWT_SECRET,
+              {
+                expiresIn : '1h'
+              })
+              res.json({ message: "Login successful", status: true, user: result[0], token: token });
+
+    }
   });
 }
